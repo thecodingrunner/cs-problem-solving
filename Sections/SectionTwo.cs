@@ -175,7 +175,7 @@ namespace cs_problem_solving.Sections
             {
                 new("hello", false, IsAllUpperCase),
                 new("YEAH", true, IsAllUpperCase),
-                new("Well HELLO!", true, IsAllUpperCase),
+                new("Well HELLO!", false, IsAllUpperCase),
                 new("GOOD MORNING", true, IsAllUpperCase)
             };
 
