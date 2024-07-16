@@ -85,9 +85,9 @@ namespace cs_problem_solving.Test
             {
                 return array switch
                 {
-                    object[] objectArray => string.Join(", ", objectArray.Select(ToSafeString)),
-                    int[] intArray => string.Join(", ", intArray),
-                    byte[] byteArray => string.Join(", ", byteArray),
+                    object[] objectArray => "[" + string.Join(", ", objectArray.Select(ToSafeString)) + "]",
+                    int[] intArray => "[" + string.Join(", ", intArray) + "]",
+                    byte[] byteArray => "[" + string.Join(", ", byteArray) + "]",
                     _ => "☹️ Can't display this array type... Northcoders have made a mistake!"
                 };
             }
