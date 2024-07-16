@@ -12,8 +12,8 @@ namespace cs_problem_solving.Test
         public TIn2 Input2 { get; set; }
         public TOut Output { get; set; }
 
-        public Func<TIn1, TIn2, TOut> Function { get; set; }               
-                       
+        public Func<TIn1, TIn2, TOut> Function { get; set; }
+
         public BiTest(TIn1 input1, TIn2 input2, TOut output, Func<TIn1, TIn2, TOut> function)
         {
             this.Input1 = input1;
