@@ -51,7 +51,9 @@ namespace cs_problem_solving.Sections
         {
             /* TODO: This function should take an array of numbers as an argument and return an array containing all positive numbers from the input (retaining the order)
              */
-            return [];
+            List<int> result = input.Where(x => x > 0).ToList();
+
+            return result;
         }
 
 

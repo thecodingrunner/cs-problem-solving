@@ -50,7 +50,29 @@ namespace cs_problem_solving.Test
         private static void tryInput<TIn, TOut>(TIn input, TOut expectedOutput, Func<TIn, TOut> function)
         {
             TOut result = function(input);
-            if (Equals(result, expectedOutput))
+            bool isCorrect = true;
+            
+            if (result is IList resultList && expectedOutput is IList expectedOutputList)
+            {
+                if (resultList.Count != expectedOutputList.Count)
+                {
+                    isCorrect = false;
+                }
+                for (int i = 0; i < resultList.Count; i++)
+                {
+                    if (!Equals(resultList[i], expectedOutputList[i]))
+                    {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+            }
+            else if (!Equals(result, expectedOutput))
+            {
+                isCorrect = false;
+            }
+
+            if (isCorrect)
             {
                 Console.WriteLine(ANSI_GREEN + $"    ✅ SUCCESS for input: {ToSafeString(input)}" + ANSI_RESET);
             }
