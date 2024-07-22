@@ -42,14 +42,14 @@ namespace cs_problem_solving.Sections
         public static List<string> MakeAllWordsBold(List<string> input)
         {
             /* TODO: In markdown files (e.g. 'README.md') we can denote words as bold by putting two asterisks on either side of them, such as: **hello**
-                This function should take an array of strings as an argument and return an array consisting of the same strings but in bold - ie with two asterisks either side of them
+                This function should take a list of strings as an argument and return a list consisting of the same strings but in bold - ie with two asterisks either side of them
              */
             return [];
         }
 
         public static List<int> GetPositiveNumbers(List<int> input)
         {
-            /* TODO: This function should take an array of numbers as an argument and return an array containing all positive numbers from the input (retaining the order)
+            /* TODO: This function should take a list of numbers as an argument and return an list containing all positive numbers from the input (retaining the order)
              */
             return [];
         }
@@ -148,7 +148,7 @@ namespace cs_problem_solving.Sections
                 new Test<List<int>, List<int>>([-1, -50, -999], [], SectionOne.GetPositiveNumbers)
             ];
 
-            TestApi.TryTests("getPositiveNumbers() can get all the positive numbers from an array of numbers", getPositiveNumbersTests);
+            TestApi.TryTests("getPositiveNumbers() can get all the positive numbers from a list of numbers", getPositiveNumbersTests);
         }
     }
 }

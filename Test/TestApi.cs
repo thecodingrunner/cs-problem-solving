@@ -50,7 +50,22 @@ namespace cs_problem_solving.Test
         private static void tryInput<TIn, TOut>(TIn input, TOut expectedOutput, Func<TIn, TOut> function)
         {
             TOut result = function(input);
-            if (Equals(result, expectedOutput))
+
+            bool isCorrect;
+
+            if(result is IList resultList && expectedOutput is IList expectedOutputList)
+            {
+                isCorrect = resultList.Count == expectedOutputList.Count &&
+                            !resultList.Cast<object>()
+                                       .Where((t, i) => !Equals(t, expectedOutputList[i]))
+                                       .Any();
+            }
+            else
+            {
+                isCorrect = Equals(result, expectedOutput);
+            }                  
+
+            if (isCorrect)
             {
                 Console.WriteLine(ANSI_GREEN + $"    ✅ SUCCESS for input: {ToSafeString(input)}" + ANSI_RESET);
             }
@@ -65,7 +80,22 @@ namespace cs_problem_solving.Test
         private static void tryBiInput<TInOne, TInTwo, TOut>(BiTest<TInOne, TInTwo, TOut> test)
         {
             TOut result = test.Function(test.Input1, test.Input2);
-            if (Equals(result, test.Output))
+
+            bool isCorrect;                        
+
+            if (result is IList resultList && test.Output is IList expectedOutputList)
+            {
+                isCorrect = resultList.Count == expectedOutputList.Count &&
+                            !resultList.Cast<object>()
+                                       .Where((t, i) => !Equals(t, expectedOutputList[i]))
+                                       .Any();
+            }
+            else
+            {
+                isCorrect = Equals(result, test.Output);
+            }
+
+            if (isCorrect)
             {
                 Console.WriteLine(ANSI_GREEN + $"   ✅ SUCCESS for inputs: {ToSafeString(test.Input1)}, {ToSafeString(test.Input2)}" + ANSI_RESET);
             }
