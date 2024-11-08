@@ -1,4 +1,5 @@
 ﻿using cs_problem_solving.Test;
+using System.Linq.Expressions;
 
 namespace cs_problem_solving.Sections
 {
@@ -8,21 +9,36 @@ namespace cs_problem_solving.Sections
         {
             /* TODO: This function should take two strings as arguments and return true 
              * if their final character is the same or false if not */
-            return false;
+            return a[a.Length - 1] == b[b.Length - 1];
         }
 
         public static bool IsAllUpperCase(string input)
         {
             /* TODO: This function should take a string as an argument and return true 
              * if every letter is upper case and false if at least one character is not */
-            return false;
+            foreach (char c in input)
+            {
+                if (Char.IsLower(c))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static string CollectTheVowels(string input)
         {
             /* TODO: This function should take a string as its argument and return a string 
              * consisting of all vowels found in the input (retaining the order) */
-            return "";
+            string vowels = "";
+            foreach (char c in input)
+            {
+                if ("aeiouAEIOU".IndexOf(c) >= 0)
+                {
+                    vowels += c;
+                }
+            }
+            return vowels;
         }
 
         public static string AccessItem(List<string> input, int index)
@@ -34,14 +50,32 @@ namespace cs_problem_solving.Sections
              * there are no values, the indexing should "loop back around" and 
              * continue from the start of the list.
             */
-            return "";
+            return input[index%input.Count];
         }
 
         public static string FindDayOfTheWeek(int number)
         {
             /* TODO: This function should take a number from 1 to 7 inclusive, 
              * and return a string of the corresponding day of the week */
-            return "";
+            switch (number)
+            {
+                case 1:
+                    return "Monday";
+                case 2:
+                    return "Tuesday";
+                case 3:
+                    return "Wednesday";
+                case 4:
+                    return "Thursday";
+                case 5:
+                    return "Friday";
+                case 6:
+                    return "Saturday";
+                case 7:
+                    return "Sunday";
+                default:
+                    return "Not a week day";
+            }
         }
 
         public static string CreatePercentage(int a, int b)
@@ -51,14 +85,22 @@ namespace cs_problem_solving.Sections
                 - you must round the percentages to the nearest whole number
                 - single-digit percentages require the leading zero
              */
-            return "";
+            float aFloat = (float)a;
+            float bFloat = (float)b;
+            double percentage = Math.Round((aFloat / bFloat) * 100);
+            if (percentage < 10)
+            {
+                return "0" + percentage.ToString() + "%";
+            }
+            return percentage.ToString() + "%";
         }
 
         public static int ExtractNumber(string input)
         {
             /* TODO: This function should take a string containing a number 
              * wrapped in a pair of round brackets and return said number */
-            return -1;
+            string[] array = input.Split('(', ')');
+            return Int32.Parse(array[1]);
         }
 
 

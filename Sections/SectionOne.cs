@@ -1,7 +1,9 @@
 ﻿using cs_problem_solving.Test;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,13 +15,13 @@ namespace cs_problem_solving.Sections
         {
             /* TODO: This function should take 2 strings and join them together with a space in between
                      and return the newly created string */
-            return "";
+            return String.Join(" ", input);
         }
 
         public static bool CheckWordEndsWithIng(string input)
         {
             /* TODO: take a string as an argument and return a boolean based on whether the word given ends with 'ing' */
-            return false;
+            return input.Substring(input.Length - 3, 3) == "ing";
         }
 
         public static string AddMissingPunctuation(string input)
@@ -29,14 +31,22 @@ namespace cs_problem_solving.Sections
                      if the string doesn't end with punctuation, return the string with a full-stop added at the end.
                      Otherwise, return the string unchanged
      */
-            return "";
+            switch (input.Substring(input.Length - 1, 1))
+            {
+                case "!":
+                case ".":
+                case "?":
+                    return input;
+                default:
+                    return input + ".";
+            }
         }
 
         public static int GetRemainder(int a, int b)
         {
             /* TODO: This function should take two arguments a and b, and return the remainder of the division of a / b
              */
-            return -1;
+            return a%b;
         }
 
         public static List<string> MakeAllWordsBold(List<string> input)
@@ -44,14 +54,20 @@ namespace cs_problem_solving.Sections
             /* TODO: In markdown files (e.g. 'README.md') we can denote words as bold by putting two asterisks on either side of them, such as: **hello**
                 This function should take a list of strings as an argument and return a list consisting of the same strings but in bold - ie with two asterisks either side of them
              */
-            return [];
+            List<string> result = new List<string>();
+            foreach (string word in input)
+            {
+                result.Add($"**{word}**");
+            }
+            return result;
         }
 
         public static List<int> GetPositiveNumbers(List<int> input)
         {
             /* TODO: This function should take a list of numbers as an argument and return an list containing all positive numbers from the input (retaining the order)
              */
-            return [];
+            
+            return input.Where(number => number > 0).ToList();
         }
 
 

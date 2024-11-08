@@ -2,16 +2,16 @@
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-SectionOne.RunTests();
+//SectionOne.RunTests();
 
 // *** UNCOMMENT BELOW WHEN YOU'RE READY FOR SECTION TWO ***
-// SectionTwo.RunTests();
+//SectionTwo.RunTests();
 
 // *** UNCOMMENT BELOW WHEN YOU'RE READY FOR SECTION THREE ***
-// SectionThree.RunTests();
+ //SectionThree.RunTests();
 
 // *** UNCOMMENT BELOW WHEN YOU'RE READY FOR SECTION FOUR ***
-// SectionFour.RunTests();
+SectionFour.RunTests();
 
 // *** UNCOMMENT BELOW WHEN YOU'RE READY FOR SECTION FIVE ***
 // SectionFive.RunTests();

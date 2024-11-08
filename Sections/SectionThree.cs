@@ -1,5 +1,6 @@
 ﻿using cs_problem_solving.Sections.Extras;
 using cs_problem_solving.Test;
+using System.Text.RegularExpressions;
 
 
 namespace cs_problem_solving.Sections { 
@@ -17,36 +18,63 @@ public class SectionThree
             To be a valid triangle, the sum of any two sides must be larger 
             than the remaining side
         */
-        return -1;
+        int count = 0;
+            foreach (Triangle triangle in triangles)
+            {
+                List<int> sides = triangle.sides;
+                if (!(sides[0] + sides[1] < sides[2] || sides[1] + sides[2] < sides[0] || sides[0] + sides[2] < sides[1]))
+                {
+                    count++;
+                }
+            }
+
+        return count;
     }
 
     public static List<string> CounterSpy(List<string> names)
     {
-        /* TODO:
-        *   This function takes an array of names.
-            The function should return an array containing the names of the people who aren't spies.
+            /* TODO:
+            *   This function takes an array of names.
+                The function should return an array containing the names of the people who aren't spies.
 
-            Recent intelligence has revealed that all spies codenames include the letters 's', 'p' or 'y'.
-            You can't afford to take any chances, and all names that include those letters should be removed.
+                Recent intelligence has revealed that all spies codenames include the letters 's', 'p' or 'y'.
+                You can't afford to take any chances, and all names that include those letters should be removed.
 
-            IMPORTANT: 
-            Also, our spy admin team have asked that the names come back in alphabetical order, 
-            for spy filing purposes.
-            So if you could do that you'd really be saving them a lot of work. Thanks.
-        */
-        return new List<string>();
-    }
+                IMPORTANT: 
+                Also, our spy admin team have asked that the names come back in alphabetical order, 
+                for spy filing purposes.
+                So if you could do that you'd really be saving them a lot of work. Thanks.
+            */
+        List<string> result = new List<string>();
+        foreach (string name in names)
+            {
+                if (!(name.ToLower().Contains('s') || name.ToLower().Contains('p') || name.ToLower().Contains('y')))
+                {
+                    result.Add(name);
+                }
+            }
+        return result.OrderBy(x => x).ToList();
+        }
 
     public static string EncodeAlphabet(string input)
     {
-        /* TODO:
-        *   This function that accepts a string of any length, 
-        *   and replaces each letter within each word with the corresponding index 
-        *   that that letter has in the alphabet.
-            You must have a space between each index number, and do NOT need to account 
-            extra for spaces between words.
-        */
-        return "";
+            /* TODO:
+            *   This function that accepts a string of any length, 
+            *   and replaces each letter within each word with the corresponding index 
+            *   that that letter has in the alphabet.
+                You must have a space between each index number, and do NOT need to account 
+                extra for spaces between words.
+            */
+            string indexes = "";
+            string lowerCaseString = input.ToLower();
+        foreach (char letter in lowerCaseString)
+            {
+                if (letter != ' ')
+                {
+                    indexes += (letter - 'a' + 1).ToString() + " ";
+                }
+            }
+        return indexes.TrimEnd(' ');
     }
 
     public static char? FindMissingLetter(List<char> input)
@@ -66,18 +94,29 @@ public class SectionThree
         *
         *  If no character is missing, return null
         */
+        for (int i = 1; i < input.Count; i++)
+            {
+                if (input[i] - input[i - 1] > 1) return Convert.ToChar(input[i] - 1);
+            }
         return null;
     }
 
     public static string ConvertTimeString(string input)
     {
-        /* TODO:
-         *   This function should take a string representing a time with hours 
-         *   and minutes separated by a colon e.g. "13:25"
-             Some of the times are written in the 24-hour clock format
-             This function should return the time written in the 12-hour clock format
-         */
-        return null;
+            /* TODO:
+             *   This function should take a string representing a time with hours 
+             *   and minutes separated by a colon e.g. "13:25"
+                 Some of the times are written in the 24-hour clock format
+                 This function should return the time written in the 12-hour clock format
+             */
+            int hour = Int32.Parse(input.Substring(0, 2));
+            if (hour == 00) return $"12{input.Substring(2, 3)}";
+            if (hour > 12)
+            {
+                if (hour - 12 < 10) return $"0{hour - 12}{input.Substring(2, 3)}";
+                return $"{hour - 12}{input.Substring(2, 3)}";
+            }
+        return input;
     }
 
     public static int ComputePasswordScore(string input)
@@ -99,7 +138,35 @@ public class SectionThree
 
             Special characters: ! @ £ # $ % ^ & *
         */
-        return -1;
+
+        int score = 0;
+        int length = input.Length;
+        if (length < 4)
+            {
+                score = 1;
+            } else if (length < 9)
+            {
+                score = 2;
+            } else if (length > 8 && Regex.IsMatch(input, @"^[a-zA-Z]+$"))
+            {
+                score = 3;
+            } else if (length > 8 && Regex.IsMatch(input, @"^[a-zA-Z0-9]+$") && length < 13)
+            {
+                score = 4;
+            } else if (length > 8 && Regex.IsMatch(input, @"^[a-zA-Z0-9!@£#$%^&*]+$") && length < 13)
+            {
+                score = 5;
+            } else if (length > 12 && Regex.IsMatch(input, @"^[a-zA-Z0-9]+$"))
+            {
+                score = 6;
+            } else if (length > 12 && Regex.IsMatch(input, @"^[a-zA-Z0-9!@£#$%^&*]+$"))
+            {
+                score = 7;
+            } else
+            {
+                score = 0;
+            }
+        return score;
     }
 
     public static List<int> GetUniqueAndOrdered(List<int> input)
@@ -114,29 +181,59 @@ public class SectionThree
                 that have the same value, only the first one should be included in the new list.
                 The order of elements in the new list should be the same as in the original sequence.
             */
-            return null;
+            for (int i = 1; i < input.Count; i++)
+            {
+                if (input[i] == input[i - 1])
+                {
+                    input.RemoveAt(i);
+                    i--;
+                }
+            }
+            return input;
     }
 
     public static List<int> FoldArray(List<int> input, int n)
     {
-        /* TODO:  This function folds an array in the middle n number of times.
+            /* TODO:  This function folds an array in the middle n number of times.
 
-        If the list has a odd length, then fold on the middle index 
-        (the middle number therefore won't change).
-        Otherwise, fold across the 'gap' between the two middle integers 
-        and so all integers are folded.
+            If the list has a odd length, then fold on the middle index 
+            (the middle number therefore won't change).
+            Otherwise, fold across the 'gap' between the two middle integers 
+            and so all integers are folded.
 
-        To 'fold' the numbers add them together.
+            To 'fold' the numbers add them together.
 
-        For example:
+            For example:
 
-        Fold 1-times:
-        [1,2,3,4,5] -> [6,6,3]
-        First, we add the 1st with the last. Then the second with the 4th.
-        As the input array is odd in length, the middle index is not folded.
+            Fold 1-times:
+            [1,2,3,4,5] -> [6,6,3]
+            First, we add the 1st with the last. Then the second with the 4th.
+            As the input array is odd in length, the middle index is not folded.
 
-        */
-        return null;
+            */
+            while (n > 0)
+            {
+
+                if (input.Count % 2 == 0)
+                {
+                    for (int i = 0; i < input.Count / 2; i++)
+                    {
+                        input[i] = input[i] + input[input.Count - i - 1];
+                    }
+                    input = input.Slice(0, input.Count / 2);
+                } else if (input.Count % 2 == 1)
+                {
+                    for (int i = 0; i < (int)(input.Count / 2); i++)
+                    {
+                        input[i] = input[i] + input[input.Count - i - 1];
+                    }
+
+                    input = input.Slice(0, (int)(input.Count / 2) + 1);
+                }
+
+                n--;
+            }
+        return input;
     }
 
     /************************* Do not modify below this line ******************************/

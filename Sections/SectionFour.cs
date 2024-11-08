@@ -1,4 +1,6 @@
 ﻿using cs_problem_solving.Test;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 
 namespace cs_problem_solving.Sections
@@ -15,7 +17,54 @@ namespace cs_problem_solving.Sections
                     
                  The characters should be in alphabetical order by default.
                  You can assume that the only operation connecting the terms is addition.   * */
-            return null;
+
+
+            /* Split the string into an array of individual components
+             * For each component, add to a dictionary
+             * If a component contains a number, multiply the number by the remainder of the statement
+             * Otherwise just add one 
+             */
+
+            expression = expression.ToLower();
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            int multiplier = 1;
+
+            string[] array = expression.Split(' ');
+            array = array.Where(val => val != "+").ToArray();
+            Console.WriteLine(array);
+            foreach (string s in array)
+            {
+                if (Regex.IsMatch(s, @"^[a-zA-Z]+$"))
+                {
+                    multiplier = 1;
+                } else
+                {
+                    multiplier = Int32.Parse(Regex.Match(s, @"\d+").Value);
+                }
+                Console.WriteLine(multiplier);
+
+                if (!dict.ContainsKey(s))
+                {
+                    dict.Add(s, multiplier);
+                }
+                else
+                {
+                    dict[s] += multiplier;
+                }
+            }
+
+            string finalExpression = "";
+            foreach (KeyValuePair<string, int> pair in dict)
+            {
+                if (pair.Value == 1)
+                {
+                    finalExpression += $"{pair.Key} + ";
+                } else
+                {
+                    finalExpression += $"{pair.Value}{pair.Key} + ";
+                }
+            }
+            return finalExpression.Remove(finalExpression.Length - 3, 3);
         }
 
         public static string ConvertToBinary(int number)
